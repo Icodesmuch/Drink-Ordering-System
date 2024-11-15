@@ -37,5 +37,29 @@ public class DrinkDAO {
         }
     }
 
-    // Additional methods for updating or removing drinks can be added here
+    public void updateDrink(int id, String newName, String newType) {
+        String sql = "UPDATE drinks SET name = ?, type = ? WHERE id = ?";
+        try (Connection conn = Database.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, newName);
+            pstmt.setString(2, newType);
+            pstmt.setInt(3, id);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+    }
+    public void deleteDrink(int id) {
+        String sql = "DELETE FROM drinks WHERE id = ?";
+        try (Connection conn = Database.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, id);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
